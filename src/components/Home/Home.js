@@ -47,7 +47,7 @@ class Home extends Component {
     fetchdata= () =>{
       var url = this.state.url; 
       var screenshotType = this.state.screenshotType;
-      axios.get(`https://screenshot-app-server.herokuapp.com//getscreenshot/${url}/${screenshotType}`)
+      axios.get(`https://screenshot-app-server.herokuapp.com/getscreenshot/${url}/${screenshotType}`)
       .then((response) => {
         console.log("path" , response);
         console.log("path url",'https://screenshot-app-server.herokuapp.com/'+response.data);
