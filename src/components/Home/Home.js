@@ -47,12 +47,12 @@ class Home extends Component {
     fetchdata= () =>{
       var url = this.state.url; 
       var screenshotType = this.state.screenshotType;
-      axios.get(`http://localhost:4200/getscreenshot/${url}/${screenshotType}`)
+      axios.get(`https://git.heroku.com/screenshot-app-server.git/getscreenshot/${url}/${screenshotType}`)
       .then((response) => {
         console.log("path" , response);
-        console.log("path url",'http://localhost:4200'+response.data);
+        console.log("path url",'https://git.heroku.com/screenshot-app-server.git'+response.data);
         this.setState({
-          imagepath : 'http://localhost:4200'+response.data,
+          imagepath : 'https://git.heroku.com/screenshot-app-server.git'+response.data,
           DialogBoxOpen : true
         })
       })
@@ -95,7 +95,7 @@ class Home extends Component {
         return(
           <div className="HomePage">
               {this.state.DialogBoxOpen ? 
-                    <Dialog onClose={this.handleClose} aria-labelledby="customized-dialog-title" open={this.state.DialogBoxOpen}>
+                    <Dialog className="dialog" onClose={this.handleClose} aria-labelledby="customized-dialog-title" open={this.state.DialogBoxOpen}>
                       <div>
                         <img alt="requested screenshot" className="image" src={this.state.imagepath}/>
 
