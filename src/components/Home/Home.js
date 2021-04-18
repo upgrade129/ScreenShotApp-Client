@@ -47,12 +47,12 @@ class Home extends Component {
     fetchdata= () =>{
       var url = this.state.url; 
       var screenshotType = this.state.screenshotType;
-      axios.get(`https://git.heroku.com/screenshot-app-server.git/getscreenshot/${url}/${screenshotType}`)
+      axios.get(`https://screenshot-app-server.herokuapp.com//getscreenshot/${url}/${screenshotType}`)
       .then((response) => {
         console.log("path" , response);
-        console.log("path url",'https://git.heroku.com/screenshot-app-server.git'+response.data);
+        console.log("path url",'https://screenshot-app-server.herokuapp.com/'+response.data);
         this.setState({
-          imagepath : 'https://git.heroku.com/screenshot-app-server.git'+response.data,
+          imagepath : 'https://screenshot-app-server.herokuapp.com/'+response.data,
           DialogBoxOpen : true
         })
       })
