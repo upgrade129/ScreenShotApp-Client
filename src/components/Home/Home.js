@@ -8,6 +8,7 @@ import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Button from '@material-ui/core/Button';
 import axios from 'axios';
 import Dialog from '@material-ui/core/Dialog';
+import validator from 'validator';
 
 class Home extends Component {
 
@@ -17,13 +18,23 @@ class Home extends Component {
             url : "",
             screenshotType : "desktop",
             imagepath : "",
-            DialogBoxOpen : false
+            DialogBoxOpen : false,
+            isurl : true
         }
         
     }
 
 
     handleOnChangeUrl = (e) =>{
+      if (validator.isURL(e.target.value)) {
+        this.setState({
+          isurl : true
+        });
+      } else {
+        this.setState({
+          isurl : false
+        });
+      }
         this.setState({
           url : e.target.value
         })
@@ -38,7 +49,13 @@ class Home extends Component {
     submit = () => {
       console.log("url",this.state.url);
       console.log("scType",this.state.screenshotType);
-      this.fetchdata();  
+      if(this.state.isurl){
+        this.fetchdata();  
+      }
+      else{
+        alert("URL is invalid");
+      }
+
       this.setState({
         url : ""
       })
@@ -47,14 +64,24 @@ class Home extends Component {
     fetchdata= () =>{
       var url = this.state.url; 
       var screenshotType = this.state.screenshotType;
-      axios.get(`https://screenshot-app-server.herokuapp.com/getscreenshot/${url}/${screenshotType}`)
+      var details = {
+        "url" : url,
+        "viewport" : screenshotType
+      }
+      axios.post(`https://screenshot-server-app.herokuapp.com/`,details)
       .then((response) => {
         console.log("path" , response);
-        console.log("path url",'https://screenshot-app-server.herokuapp.com/'+response.data);
-        this.setState({
-          imagepath : 'https://screenshot-app-server.herokuapp.com/'+response.data,
-          DialogBoxOpen : true
-        })
+        if(response.data){
+          console.log("path url",'https://screenshot-server-app.herokuapp.com/'+response.data);
+          this.setState({
+            imagepath : 'https://screenshot-server-app.herokuapp.com/'+response.data,
+            DialogBoxOpen : true
+          });
+        }
+        else{
+          alert("Please give the accurate url");
+        }
+
       })
     }
 
@@ -96,12 +123,12 @@ class Home extends Component {
           <div className="HomePage">
               {this.state.DialogBoxOpen ? 
                     <Dialog className="dialog" onClose={this.handleClose} aria-labelledby="customized-dialog-title" open={this.state.DialogBoxOpen}>
-                      <div>
+                      <div className="imgcard">
                         <img alt="requested screenshot" className="image" src={this.state.imagepath}/>
 
                       </div>
                       <Button autoFocus color="primary" >
-                        <a onClick={this.download} download title="ImageName">
+                        <a  onClick={this.download} download title="ImageName">
                           Download ScreenShot
                         </a>
                         
@@ -114,6 +141,10 @@ class Home extends Component {
                 <form className="form">
                     <h1>Give URL and take Screenshot</h1>
                   <TextField id="input" className="formitems" id="outlined-basic" label="Outlined" variant="outlined" onChange={this.handleOnChangeUrl} value={this.state.url}/>
+                  {!this.state.isurl ? 
+                    <span style={{fontWeight:'bold', color: 'red'}}>URL is invalid *</span>
+                  :
+                    ""}
                   <RadioGroup className="formitems" row aria-label="position" name="position" defaultValue="Desktop" onChange={this.handleOnChangeViewport}>
                     <FormControlLabel
                       value="Desktop"
