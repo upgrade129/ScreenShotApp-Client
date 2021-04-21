@@ -9,6 +9,7 @@ import Button from '@material-ui/core/Button';
 import axios from 'axios';
 import Dialog from '@material-ui/core/Dialog';
 import validator from 'validator';
+import Loader from "react-loader-spinner";
 
 class Home extends Component {
 
@@ -20,7 +21,8 @@ class Home extends Component {
             imagepath : "",
             DialogBoxOpen : false,
             isurl : true,
-            imgname : ""
+            imgname : "",
+            isloading : false
         }
         
     }
@@ -52,6 +54,9 @@ class Home extends Component {
       console.log("scType",this.state.screenshotType);
       if(this.state.isurl){
         this.fetchdata();  
+        this.setState({
+          isloading : true
+        })
       }
       else{
         alert("URL is invalid");
@@ -69,15 +74,16 @@ class Home extends Component {
         "url" : url,
         "viewport" : screenshotType
       }
-      axios.post(`https://screenshot-server-app2.herokuapp.com/`,details)
+      axios.post(`http://localhost:4200/`,details)
       .then((response) => {
         console.log("path" , response);
         if(response.data){
-          console.log("path url",'https://screenshot-server-app2.herokuapp.com/'+response.data);
+          console.log("path url",'http://localhost:4200/'+response.data);
           this.setState({
             imgname : response.data,
-            imagepath : 'https://screenshot-server-app2.herokuapp.com/'+response.data,
-            DialogBoxOpen : true
+            imagepath : 'http://localhost:4200/'+response.data,
+            DialogBoxOpen : true,
+            isloading : false
           });
         }
         else{
@@ -99,6 +105,7 @@ class Home extends Component {
     };
 
     download = (e) => {
+     
       fetch(this.state.imagepath, {
         method: "GET",
         headers: {}
@@ -115,10 +122,11 @@ class Home extends Component {
           var details = {
             "name" : this.state.imgname
           }
-          axios.post(`https://screenshot-server-app2.herokuapp.com/del`,details)
+          axios.post(`http://localhost:4200/del`,details)
           .then((response) => {
             console.log("img" , response);    
           })
+          
         })
         .catch(err => {
           console.log(err);
@@ -129,7 +137,22 @@ class Home extends Component {
 
     render(){
         return(
+          
           <div className="HomePage">
+            {this.state.isloading ?
+                <Dialog className="loader" aria-labelledby="customized-dialog-title" open={this.state.isloading}>
+                  <Loader 
+                    type="Puff"
+                    color="#00BFFF"
+                    height={100}
+                    width={100}
+                  />
+                
+                </Dialog>
+              
+          :
+          ""
+          }
               {this.state.DialogBoxOpen ? 
                     <Dialog className="dialog" onClose={this.handleClose} aria-labelledby="customized-dialog-title" open={this.state.DialogBoxOpen}>
                       <div className="imgcard">
@@ -143,6 +166,7 @@ class Home extends Component {
                         
                       </Button>
                   </Dialog>
+                  
               : 
                
                ""}
@@ -177,6 +201,7 @@ class Home extends Component {
                   <Button onClick={this.submit} className="formitems" variant="contained" color="secondary">
                     Get Screenshot
                   </Button>
+                  
                 </form>
                 </Container>
             </div>
