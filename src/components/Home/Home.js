@@ -74,14 +74,14 @@ class Home extends Component {
         "url" : url,
         "viewport" : screenshotType
       }
-      axios.post(`http://localhost:4200/`,details)
+      axios.post(`https://screenshot-server-app2.herokuapp.com/`,details)
       .then((response) => {
         console.log("path" , response);
         if(response.data){
-          console.log("path url",'http://localhost:4200/'+response.data);
+          console.log("path url",'https://screenshot-server-app2.herokuapp.com/'+response.data);
           this.setState({
             imgname : response.data,
-            imagepath : 'http://localhost:4200/'+response.data,
+            imagepath : 'https://screenshot-server-app2.herokuapp.com/'+response.data,
             DialogBoxOpen : true,
             isloading : false
           });
@@ -122,7 +122,7 @@ class Home extends Component {
           var details = {
             "name" : this.state.imgname
           }
-          axios.post(`http://localhost:4200/del`,details)
+          axios.post(`https://screenshot-server-app2.herokuapp.com/del`,details)
           .then((response) => {
             console.log("img" , response);    
           })
