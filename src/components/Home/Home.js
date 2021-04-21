@@ -19,7 +19,8 @@ class Home extends Component {
             screenshotType : "desktop",
             imagepath : "",
             DialogBoxOpen : false,
-            isurl : true
+            isurl : true,
+            imgname : ""
         }
         
     }
@@ -68,13 +69,14 @@ class Home extends Component {
         "url" : url,
         "viewport" : screenshotType
       }
-      axios.post(`https://screenshot-server-app.herokuapp.com/`,details)
+      axios.post(`https://screenshot-server-app2.herokuapp.com/`,details)
       .then((response) => {
         console.log("path" , response);
         if(response.data){
-          console.log("path url",'https://screenshot-server-app.herokuapp.com/'+response.data);
+          console.log("path url",'https://screenshot-server-app2.herokuapp.com/'+response.data);
           this.setState({
-            imagepath : 'https://screenshot-server-app.herokuapp.com/'+response.data,
+            imgname : response.data,
+            imagepath : 'https://screenshot-server-app2.herokuapp.com/'+response.data,
             DialogBoxOpen : true
           });
         }
@@ -110,6 +112,13 @@ class Home extends Component {
             document.body.appendChild(link);
             link.click();
           });
+          var details = {
+            "name" : this.state.imgname
+          }
+          axios.post(`https://screenshot-server-app2.herokuapp.com/del`,details)
+          .then((response) => {
+            console.log("img" , response);    
+          })
         })
         .catch(err => {
           console.log(err);
