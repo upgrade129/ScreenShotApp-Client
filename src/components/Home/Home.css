@@ -1,3 +1,13 @@
+.headerimg{
+    margin-left: 30%;
+    width: 80%;
+    height: 15vh;
+    background-image: url(../../assets/images.png);
+    background-repeat: no-repeat;
+    background-size: contain;
+    margin-bottom: 10px;
+}
+
 .HomePage{
     top: 0;
     left: 0;
@@ -6,7 +16,7 @@
     height: 100%;
     background-image: url(../../assets/camera-icon.png);
     background-repeat: no-repeat;
-    background-size: 45%;
+    background-size: 40%;
     background-position: right top 15px;
     
 }
@@ -49,6 +59,7 @@
     max-height: 100%;
 }
 
-.loader{
-    opacity: 1;
+.dialogbtn{
+    bottom:2px black solid;
+    margin-top: 10px;
 }

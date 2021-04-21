@@ -10,6 +10,9 @@ import axios from 'axios';
 import Dialog from '@material-ui/core/Dialog';
 import validator from 'validator';
 import Loader from "react-loader-spinner";
+import IconButton from '@material-ui/core/IconButton';
+import Typography from '@material-ui/core/Typography';
+import CloseIcon from '@material-ui/icons/Close';
 
 class Home extends Component {
 
@@ -87,7 +90,10 @@ class Home extends Component {
           });
         }
         else{
-          alert("Please give the accurate url");
+          alert("Please give the accurate url including HTTPS://...");
+          this.setState({
+            isloading: false
+          })
         }
 
       })
@@ -104,8 +110,23 @@ class Home extends Component {
       });
     };
 
+    cancelDialog = () =>{
+      this.handleClose();
+      this.deletescreenshot();
+    }
+
+    deletescreenshot = () =>{
+      var details = {
+        "name" : this.state.imgname
+      }
+      axios.post(`https://screenshot-server-app2.herokuapp.com/del`,details)
+      .then((response) => {
+        console.log("img" , response);    
+      })
+    }
+
     download = (e) => {
-     
+     this.handleClose();
       fetch(this.state.imagepath, {
         method: "GET",
         headers: {}
@@ -119,13 +140,7 @@ class Home extends Component {
             document.body.appendChild(link);
             link.click();
           });
-          var details = {
-            "name" : this.state.imgname
-          }
-          axios.post(`https://screenshot-server-app2.herokuapp.com/del`,details)
-          .then((response) => {
-            console.log("img" , response);    
-          })
+          this.deletescreenshot();
           
         })
         .catch(err => {
@@ -154,15 +169,20 @@ class Home extends Component {
           ""
           }
               {this.state.DialogBoxOpen ? 
-                    <Dialog className="dialog" onClose={this.handleClose} aria-labelledby="customized-dialog-title" open={this.state.DialogBoxOpen}>
+                    <Dialog className="dialog" aria-labelledby="customized-dialog-title" open={this.state.DialogBoxOpen}>
+            
                       <div className="imgcard">
                         <img alt="requested screenshot" className="image" src={this.state.imagepath}/>
 
                       </div>
-                      <Button autoFocus color="primary" >
-                        <a  onClick={this.download} download title="ImageName">
+                      <Button fixed autoFocus color="primary" className="dialogbtn" >
+                        <a  onClick={this.download} className="btndownload" download title="ImageName">
                           Download ScreenShot
                         </a>
+                        
+                      </Button>
+                      <Button fixed autoFocus color="danger" className="dialogbtn" onClick={this.cancelDialog} >
+                        CANCEL
                         
                       </Button>
                   </Dialog>
@@ -172,10 +192,10 @@ class Home extends Component {
                ""}
                 <Container className="container" fixed>
                 <form className="form">
-                    <h1>Give URL and take Screenshot</h1>
-                  <TextField id="input" className="formitems" id="outlined-basic" label="Outlined" variant="outlined" onChange={this.handleOnChangeUrl} value={this.state.url}/>
+                    <div className="headerimg"></div>
+                  <TextField id="input" className="formitems" id="url" label="URL" variant="outlined" onChange={this.handleOnChangeUrl} value={this.state.url}/>
                   {!this.state.isurl ? 
-                    <span style={{fontWeight:'bold', color: 'red'}}>URL is invalid *</span>
+                    <span style={{fontWeight:'bold', color: 'red'}}>Add valid URL *</span>
                   :
                     ""}
                   <RadioGroup className="formitems" row aria-label="position" name="position" defaultValue="Desktop" onChange={this.handleOnChangeViewport}>
