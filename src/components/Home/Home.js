@@ -8,11 +8,8 @@ import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Button from '@material-ui/core/Button';
 import axios from 'axios';
 import Dialog from '@material-ui/core/Dialog';
-import validator from 'validator';
 import Loader from "react-loader-spinner";
-import IconButton from '@material-ui/core/IconButton';
-import Typography from '@material-ui/core/Typography';
-import CloseIcon from '@material-ui/icons/Close';
+
 
 class Home extends Component {
 
@@ -32,15 +29,19 @@ class Home extends Component {
 
 
     handleOnChangeUrl = (e) =>{
-      if (validator.isURL(e.target.value)) {
+      var url = e.target.value;
+      var regexQuery = "^(https?://)?(www\\.)?([-a-z0-9]{1,63}\\.)*?[a-z0-9][-a-z0-9]{0,61}[a-z0-9]\\.[a-z]{2,6}(/[-\\w@\\+\\.~#\\?&/=%]*)?$";
+      var query = new RegExp(regexQuery,"i");
+      if (query.test(url)) {
         this.setState({
           isurl : true
         });
       } else {
         this.setState({
           isurl : false
-        });
+          });
       }
+      
         this.setState({
           url : e.target.value
         })
@@ -90,7 +91,8 @@ class Home extends Component {
           });
         }
         else{
-          alert("Please give the accurate url including HTTPS://...");
+          // alert("Please give the accurate url including HTTPS://...");
+          alert("URL is unsupported ...");
           this.setState({
             isloading: false
           })
@@ -175,13 +177,13 @@ class Home extends Component {
                         <img alt="requested screenshot" className="image" src={this.state.imagepath}/>
 
                       </div>
-                      <Button fixed autoFocus color="primary" className="dialogbtn" >
+                      <Button fixed autoFocus className="dialogbtn" >
                         <a  onClick={this.download} className="btndownload" download title="ImageName">
                           Download ScreenShot
                         </a>
                         
                       </Button>
-                      <Button fixed autoFocus color="danger" className="dialogbtn" onClick={this.cancelDialog} >
+                      <Button fixed autoFocus className="dialogbtn" onClick={this.cancelDialog} >
                         CANCEL
                         
                       </Button>
@@ -192,10 +194,10 @@ class Home extends Component {
                ""}
                 <Container className="container" fixed>
                 <form className="form">
-                    <div className="headerimg"></div>
+                <h1>Screenshot App</h1>
                   <TextField id="input" className="formitems" id="url" label="URL" variant="outlined" onChange={this.handleOnChangeUrl} value={this.state.url}/>
                   {!this.state.isurl ? 
-                    <span style={{fontWeight:'bold', color: 'red'}}>Add valid URL *</span>
+                    <span style={{fontWeight:'bold', color: 'red'}}>Add http or https in the begining of the url * with proper syntax</span>
                   :
                     ""}
                   <RadioGroup className="formitems" row aria-label="position" name="position" defaultValue="Desktop" onChange={this.handleOnChangeViewport}>

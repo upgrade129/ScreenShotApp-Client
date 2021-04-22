@@ -1,11 +1,11 @@
-.headerimg{
-    margin-left: 30%;
-    width: 80%;
-    height: 15vh;
-    background-image: url(../../assets/images.png);
-    background-repeat: no-repeat;
-    background-size: contain;
-    margin-bottom: 10px;
+@import url('https://fonts.googleapis.com/css?family=Amatic+SC');
+h1{
+    font-family: "Amatic SC", cursive;
+    font-weight: 900;
+    text-align: center;
+    font-size: 5vw;
+    color: rgb(255, 230, 0);
+    text-shadow: rgb(0, 21, 184) 2px 2px 2px;
 }
 
 .HomePage{
@@ -16,26 +16,24 @@
     height: 100%;
     background-image: url(../../assets/camera-icon.png);
     background-repeat: no-repeat;
-    background-size: 40%;
+    background-size: 30%;
     background-position: right top 15px;
     
 }
 
 .container{
-    background-color: rgb(180, 197, 197,0.3);
-    width: auto;
+    max-width: 80%;
     height: 100%;
-    border-radius: 30px;
     margin-top: 15%;
-    margin-left: 0;
-    margin-right: 0;
-    
     
 }
 
 .form{
-    z-index: 1;
-    padding-top: 10%;
+    margin-left: 10%;
+    max-width: 80%;
+    height: 100%;
+    background-color: rgb(180, 197, 197,0.3);
+    border-radius: 30px;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -60,6 +58,6 @@
 }
 
 .dialogbtn{
-    bottom:2px black solid;
+    border :2px black solid;
     margin-top: 10px;
 }
