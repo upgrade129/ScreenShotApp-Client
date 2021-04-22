@@ -197,7 +197,7 @@ class Home extends Component {
                 <h1>Screenshot App</h1>
                   <TextField id="input" className="formitems" id="url" label="URL" variant="outlined" onChange={this.handleOnChangeUrl} value={this.state.url}/>
                   {!this.state.isurl ? 
-                    <span style={{fontWeight:'bold', color: 'red'}}>Add http or https in the begining of the url * with proper syntax</span>
+                    <span className="span">Give valid URL *</span>
                   :
                     ""}
                   <RadioGroup className="formitems" row aria-label="position" name="position" defaultValue="Desktop" onChange={this.handleOnChangeViewport}>
@@ -205,19 +205,19 @@ class Home extends Component {
                       value="Desktop"
                       control={<Radio color="primary" />}
                       label="Desktop View"
-                      labelPlacement="top"
+                      labelPlacement="end"
                     />
                     <FormControlLabel
                       value="Tab"
                       control={<Radio color="primary" />}
                       label="Tab View"
-                      labelPlacement="top"
+                      labelPlacement="end"
                     />
                     <FormControlLabel
                       value="Mobile"
                       control={<Radio color="primary" />}
                       label="Mobile view"
-                      labelPlacement="top"
+                      labelPlacement="end"
                     />
                   </RadioGroup>
                   <Button onClick={this.submit} className="formitems" variant="contained" color="secondary">
