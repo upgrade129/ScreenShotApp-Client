@@ -17,7 +17,7 @@ class Home extends Component {
         super(props);
         this.state = {
             url : "",
-            screenshotType : "desktop",
+            screenshotType : "DESKTOP",
             imagepath : "",
             DialogBoxOpen : false,
             isurl : true,
@@ -200,23 +200,23 @@ class Home extends Component {
                     <span className="span">Give valid URL *</span>
                   :
                     ""}
-                  <RadioGroup className="formitems" row aria-label="position" name="position" defaultValue="Desktop" onChange={this.handleOnChangeViewport}>
+                  <RadioGroup className="formitems" row aria-label="position" name="position" defaultValue="DESKTOP" onChange={this.handleOnChangeViewport}>
                     <FormControlLabel
-                      value="Desktop"
+                      value="DESKTOP"
                       control={<Radio color="primary" />}
-                      label="Desktop View"
+                      label="DESKTOP View"
                       labelPlacement="end"
                     />
                     <FormControlLabel
-                      value="Tab"
+                      value="TAB"
                       control={<Radio color="primary" />}
-                      label="Tab View"
+                      label="TAB View"
                       labelPlacement="end"
                     />
                     <FormControlLabel
-                      value="Mobile"
+                      value="MOBILE"
                       control={<Radio color="primary" />}
-                      label="Mobile view"
+                      label="MOBILE view"
                       labelPlacement="end"
                     />
                   </RadioGroup>
