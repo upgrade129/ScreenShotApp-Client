@@ -58,7 +58,15 @@ class Home extends Component {
       console.log("url",this.state.url);
       console.log("scType",this.state.screenshotType);
       if(this.state.isurl){
-        this.fetchdata();  
+        var checkurl = this.state.url.slice(0,8);
+        if(checkurl.includes("http://") || checkurl.includes("https://")){
+          this.fetchdata(url);
+        }
+        else{
+          var url = "https://"+this.state.url
+          this.fetchdata(url)
+        }
+          
         this.setState({
           isloading : true
         })
@@ -72,8 +80,7 @@ class Home extends Component {
       })
     }
 
-    fetchdata= () =>{
-      var url = this.state.url; 
+    fetchdata= (url) =>{ 
       var screenshotType = this.state.screenshotType;
       var details = {
         "url" : url,
@@ -143,7 +150,7 @@ class Home extends Component {
             link.click();
           });
           this.deletescreenshot();
-          
+          alert("downloaded sucessfully if not please wait.");
         })
         .catch(err => {
           console.log(err);
