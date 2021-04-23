@@ -9,7 +9,8 @@ import Button from '@material-ui/core/Button';
 import axios from 'axios';
 import Dialog from '@material-ui/core/Dialog';
 import Loader from "react-loader-spinner";
-
+import DialogActions from '@material-ui/core/DialogActions';
+import DialogContent from '@material-ui/core/DialogContent';
 
 class Home extends Component {
 
@@ -91,7 +92,6 @@ class Home extends Component {
           });
         }
         else{
-          // alert("Please give the accurate url including HTTPS://...");
           alert("URL is unsupported ...");
           this.setState({
             isloading: false
@@ -172,26 +172,27 @@ class Home extends Component {
           }
               {this.state.DialogBoxOpen ? 
                     <Dialog className="dialog" aria-labelledby="customized-dialog-title" open={this.state.DialogBoxOpen}>
-            
-                      <div className="imgcard">
-                        <img alt="requested screenshot" className="image" src={this.state.imagepath}/>
+                      <DialogContent>
+                        <div className="imgcard">
+                          <img alt="requested screenshot" className="image" src={this.state.imagepath}/>
 
-                      </div>
-                      <Button fixed autoFocus className="dialogbtn" >
+                        </div>
+                      </DialogContent>
+                      <DialogActions>
                         <a  onClick={this.download} className="btndownload" download title="ImageName">
-                          Download ScreenShot
-                        </a>
-                        
-                      </Button>
-                      <Button fixed autoFocus className="dialogbtn" onClick={this.cancelDialog} >
-                        CANCEL
-                        
-                      </Button>
+                          <Button variant="contained" color="primary" className="dialogbtn" >Download ScreenShot</Button>
+                        </a>                      
+                        <Button variant="contained" color="secondary" className="dialogbtn" onClick={this.cancelDialog} >
+                          CANCEL
+
+                        </Button>
+                      </DialogActions>
                   </Dialog>
                   
               : 
                
                ""}
+
                 <Container className="container" fixed>
                 <form className="form">
                 <h1>Screenshot App</h1>
